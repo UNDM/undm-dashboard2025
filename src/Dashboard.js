@@ -29,12 +29,13 @@ class Dashboard extends React.Component{
 
     poll = () => {
         this.setState({pollingCount: this.state.pollingCount + 1, oldDonations: this.state.donations});
-        fetch('https://events.dancemarathon.com/api/events/6219/donations?limit=5',
+        fetch('https://events.dancemarathon.com/api/events/6219/donations?limit=5', {
              headers: {
                 'Cache-Control': 'no-cache, no-store, must-revalidate',
                 'Pragma': 'no-cache',
                 'Expires': '0'
-            })
+             }
+        })
             .then(response => response.json())
             .then(data => {
                 this.setState({donations: data})

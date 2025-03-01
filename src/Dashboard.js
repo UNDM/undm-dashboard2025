@@ -29,17 +29,22 @@ class Dashboard extends React.Component{
 
     poll = () => {
         this.setState({pollingCount: this.state.pollingCount + 1, oldDonations: this.state.donations});
-        fetch('https://events.dancemarathon.com/api/events/6219/donations?limit=5')
+        fetch('https://events.dancemarathon.com/api/events/6219/donations?limit=5',
+             headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            })
             .then(response => response.json())
             .then(data => {
                 this.setState({donations: data})
-                data.forEach(d => {
-                    if(!this.state.oldDonations.map(o => o.donationID).includes(d.donationID) && d.amount >= 50.0){
-                        this.setState({bigDonation: d});
-                        document.getElementById('donationAlert').classList.remove("donationAlertHidden");
-                        this.start();
-                    }
-                });
+                // data.forEach(d => {
+                //     if(!this.state.oldDonations.map(o => o.donationID).includes(d.donationID) && d.amount >= 50.0){
+                //         this.setState({bigDonation: d});
+                //         document.getElementById('donationAlert').classList.remove("donationAlertHidden");
+                //         this.start();
+                //     }
+                // });
             });
     }
 
